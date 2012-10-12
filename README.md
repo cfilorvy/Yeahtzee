@@ -1,4 +1,4 @@
 Yeahtzee
 ========
 
-High Level Yahtzee Statistics Benchmarking
+Hard Core Yahtzee Statistics Benchmarking 
