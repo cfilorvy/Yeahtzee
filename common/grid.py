@@ -108,7 +108,7 @@ class Grid(object):
         elif position in ["fh", "ss", "ls", "yz", "yb"]: # Return fixed score
             if position == "fh":
                 tallies = hand.get_dicedict().values()
-                if not ((3 in tallies and 2 in tallies) or 5 in tallies):
+                if 1 in tallies:
                     return 0 # This is not a full house
             
             elif position in ["ss", "ls"]:
