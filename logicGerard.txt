@@ -1,34 +1,19 @@
 
 
 elke player heeft:
+- een engine
 - een grid (grid)
-- een lijst met andere players die meedoen (players)
 - een functie speelEenBeurt die zorgt dat er een plaatje van de grid wordt ingevuld
-
-
-
-	#wordt ingevuld door terminal commando
-	#variabelen die op voorhand gekend moeten zijn
-	players = []
-	runs = 100;
-
-
-	assert len(players) >= 0
-
 
 	#geef de lijst van alle players door aan elke player. Het eerste item is wel steeds zichzelf
 
-	for i in range(len(players)):
-		players[i], players[0] = players[0], players[i]
-		player.setOpponents(players)
-
 	for i in range(runs):
 
-		while(players[0].grid.available_positions()):
+		while(PLAYERS[0].grid.available_positions()):
 	
-			for player in players:
+			[player.turn() for player in PLAYERS]
 	
-				player.speelEenBeurt()
+				
 
 			# update grafieken
 
