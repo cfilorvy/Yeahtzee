@@ -8,20 +8,22 @@ Copyright (c) 2012 LT3. All rights reserved.
 """
 
 import sys
-sys.path.append("/Users/stef/Desktop/python/Yeahtzee/")
+import os
+sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/../")
 from common import grid
 from common import hand
 
 def main(process_id, verbose = False):
+
+	print "fons" 
+
 	g = grid.Grid()
 	h = hand.Hand()
 	h.sort_by_value()
 	
-	tallies = [5]
 	
-	if 1 in tallies:
-		print "NOG fh"
-	return g
+	
+	
 
 
 if __name__ == '__main__':

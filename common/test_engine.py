@@ -8,6 +8,8 @@ Copyright (c) 2012 LT3. All rights reserved.
 """
 
 import sys
+import os
+sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/../")
 from multiprocessing import Pool # Dit kunnen we hiervoor maar beter gebruiken :)
 from engines import automahtzee
 
