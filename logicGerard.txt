@@ -5,17 +5,16 @@ elke player heeft:
 - een grid (grid)
 - een functie speelEenBeurt die zorgt dat er een plaatje van de grid wordt ingevuld
 
-	#geef de lijst van alle players door aan elke player. Het eerste item is wel steeds zichzelf
-
 	for i in range(runs):
 
-		while(PLAYERS[0].grid.available_positions()):
-	
-			[player.turn() for player in PLAYERS]
-	
-				
+		[engine.startRun() for engine in ENGINES]
 
-			# update grafieken
+		while(ENGINES[0].grid.available_positions()):
+	
+			[engine.turn() for engine in ENGINES]
+	
+
+		# update grafieken
 
 
 		# print eindscore

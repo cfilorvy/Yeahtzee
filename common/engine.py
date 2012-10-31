@@ -10,8 +10,10 @@ from common import grid
 
 class Engine(object):
 	
-	def startRun():
-		self.grid = new Grid()
+	
+	def startToRun(self):
+	
+		self.grid = grid.Grid()
 
 
 
