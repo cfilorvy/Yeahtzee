@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 """
-hand.py
+test_engine.py
 
 Created by Bart Desmet on 2012-09-26.
 Copyright (c) 2012 LT3. All rights reserved.
