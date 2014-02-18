@@ -20,3 +20,4 @@ elke player heeft:
 		# print eindscore
 		- per speler: totaal punten, gemiddeld aantal punten, max punten, min punten, aantal gewonnen spelletjes
 
+ 
