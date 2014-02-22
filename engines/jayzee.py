@@ -54,6 +54,6 @@ class Engine(engine.Engine):
 
 
 if __name__ == "__main__":
-	j = Engine()
+	j = Engine("jayzee")
 	j.start_to_run_complete();
 	
