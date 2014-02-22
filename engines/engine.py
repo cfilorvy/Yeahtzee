@@ -18,6 +18,8 @@ class Engine(object):
 		while self.grid.available_positions():
 			self.turn();
 
+		print "Grand total: %d" % (self.grid.grand_total())
+
 		return self.grid
 
 
