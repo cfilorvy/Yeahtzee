@@ -14,10 +14,10 @@ logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=lo
 class Engine(object):
     def __init__(self, name):
         self.name = name
-        self.grid = grid.Grid()
     
     def start_to_run_complete(self):
         """Play a game from start to finish"""
+        self.grid = grid.Grid()
         logging.debug("Starting complete game with engine %s" % self.name)
         while self.grid.available_positions():
             self.turn()
