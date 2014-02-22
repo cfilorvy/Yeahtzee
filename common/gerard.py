@@ -70,21 +70,21 @@ class Tournament(object):
         """Returns the average score for a position, over all grids,
         for each engine"""
         def average(pos, name):
-            return sum(g.return_score_or_zero(pos) for g in self.stored_games[name])/float(len(self.stored_games[name]))
+            return sum(g.get_score(pos) for g in self.stored_games[name])/float(len(self.stored_games[name]))
         return {e.name: average(position, e.name) for e in self.engines}
     
     def get_minimum(self, position):
         """Returns the minimum score for a position, over all grids,
         for each engine"""
         def minimum(pos, name):
-            return min(g.return_score_or_zero(pos) for g in self.stored_games[name])
+            return min(g.get_score(pos) for g in self.stored_games[name])
         return {e.name: minimum(position, e.name) for e in self.engines}
     
     def get_maximum(self, position):
         """Returns the maximum score for a position, over all grids,
         for each engine"""
         def maximum(pos, name):
-            return max(g.return_score_or_zero(pos) for g in self.stored_games[name])
+            return max(g.get_score(pos) for g in self.stored_games[name])
         return {e.name: maximum(position, e.name) for e in self.engines}
     
     def get_hit_ratio(self, position):
@@ -92,7 +92,7 @@ class Tournament(object):
         over all grids, for each engine"""
         def hit_ratio(pos, name):
             # for g in self.stored_games[name]: print repr(g)
-            return sum(1 for g in self.stored_games[name] if g.return_score_or_zero(pos))/float(len(self.stored_games[name]))
+            return sum(1 for g in self.stored_games[name] if g.get_score(pos))/float(len(self.stored_games[name]))
         return {e.name: hit_ratio(position, e.name) for e in self.engines}
     
 

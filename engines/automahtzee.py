@@ -35,7 +35,7 @@ class Engine(engine.Engine):
         best_pos = self.grid.available_positions()[possible_scores.index(max_score)]
         if verbose: print "Best position:\t", best_pos
         self.grid.assign(h, best_pos)
-        if verbose: print "Assigned hand to position '%s' for %d points.\n" % (grid.positions[best_pos][0], self.grid.return_score_or_zero(best_pos))
+        if verbose: print "Assigned hand to position '%s' for %d points.\n" % (grid.positions[best_pos][0], self.grid.get_score(best_pos))
         return self.grid
     
 

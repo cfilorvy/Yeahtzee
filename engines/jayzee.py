@@ -39,7 +39,7 @@ class Engine(engine.Engine):
 			
 		self.grid.assign(h, worst_pos)
 
-		print "Assigned hand to position '%s' for %d points.\n" % (grid.positions[worst_pos][0], self.grid.return_score_or_zero(worst_pos))
+		print "Assigned hand to position '%s' for %d points.\n" % (grid.positions[worst_pos][0], self.grid.get_score(worst_pos))
 
 		return self.grid
 
