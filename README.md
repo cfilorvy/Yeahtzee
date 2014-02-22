@@ -6,7 +6,7 @@
 > 
 > Bart: "Then why are you always losing?"
 
-**Yeahtzee** is a battleground to discover the best strategy in [Yahtzee](http://en.wikipedia.org/wiki/Yahtzee). It faces off different Yahtzee engines over a number games, collecting statistics along the way.
+**Yeahtzee** is a battleground to discover the best strategy in [Yahtzee](http://en.wikipedia.org/wiki/Yahtzee). It faces off different Yahtzee engines over a number of games, collecting statistics along the way.
 
 ## Combatants / Engines
 
