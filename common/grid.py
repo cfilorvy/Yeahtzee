@@ -55,7 +55,7 @@ class InvalidPositionError():
 class Grid(object):
     """Yahtzee score grid"""
     def __init__(self):
-        self.grid = {x: "---" for x in positions}
+        self.grid = {x: (None, "---") for x in positions}
         self.update_totals()
     
     
@@ -65,7 +65,11 @@ class Grid(object):
         self.grid["gt"] = (None, self.grand_total())
     
     def available_positions(self):
-        return [x for x in assignable_positions if self.grid[x] == "---"]
+        """Returns all the grid positions that are currently available
+        for scoring.
+        - YB is only available after YZ has been scored other than 0 or ---
+        - NB, NT and GT are never available for scoring"""
+        return [x for x in assignable_positions if self.grid[x][1] == "---"]
     
     
     def assign(self, hand, position):
@@ -74,7 +78,7 @@ class Grid(object):
         assert isinstance(hand, h.Hand)
         # print "POSITION:", position
         # print self
-        try: assert self.grid[position] == "---"
+        try: assert self.grid[position][1] == "---"
         except AssertionError:
             raise FilledInError
         self.grid[position] = (hand, self.score(hand, position))
@@ -85,7 +89,7 @@ class Grid(object):
         """This function checks how many points you would get if the hand would
         be filled in at the given position."""
         
-        try: assert self.grid[position] == "---"
+        try: assert self.grid[position][1] == "---"
         except AssertionError:
             print self
             print position
@@ -132,17 +136,20 @@ class Grid(object):
             raise InvalidPositionError
     
     
-    def return_score_or_zero(self, pos):
-        if self.grid[pos]: return self.grid[pos][1]
-        else: return 0
+    def get_score(self, pos):
+        if self.grid[pos][1] == "---": return 0
+        else: return self.grid[pos][1]
     
     def number_total(self):
-        return sum(self.grid[pos][1] for pos in ["n1", "n2", "n3", "n4", "n5", "n6"] if self.grid[pos] != "---")
+        """Sums all scores of the currently filled number positions"""
+        return sum(self.grid[pos][1] for pos in ["n1", "n2", "n3", "n4", "n5", "n6"] if self.grid[pos][0])
         
     
     
     def grand_total(self):
-        return sum(self.grid[pos][1] for pos in assignable_positions if self.grid[pos] != "---") + self.grid["nb"][1]
+        """Sums all scores of the currently filled assignable positions
+        plus the number bonus"""
+        return sum(self.grid[pos][1] for pos in assignable_positions if self.grid[pos][0]) + self.grid["nb"][1]
     
     
     def __str__(self):
