@@ -4,21 +4,17 @@
 automahtzee.py
 
 Created by Bart Desmet on 2012-08-14.
-Copyright (c) 2012 LT3. All rights reserved.
 """
 
 import sys
 import os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/../")
 
-
 from common import grid
 from common import hand
 from engines import engine
 
-
 class Engine(engine.Engine):
-
     def turn(self):
         verbose = True
         #process_id, verbose = False
@@ -41,10 +37,9 @@ class Engine(engine.Engine):
         self.grid.assign(h, best_pos)
         if verbose: print "Assigned hand to position '%s' for %d points.\n" % (grid.positions[best_pos][0], self.grid.return_score_or_zero(best_pos))
         return self.grid
-
-
+    
 
 if __name__ == "__main__":
-    j = Engine()
+    j = Engine("automahtzee")
     j.start_to_run_complete();
     

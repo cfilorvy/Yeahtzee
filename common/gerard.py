@@ -18,8 +18,11 @@ class Tournament(object):
     """Yahtzee tournament in which one or more engines can compete over the course of multiple games"""
     def __init__(self, engines, threads, games):
         self.engines = engines
+        # Engines should have unique names
+        assert len(self.engines) == len(list(set(e.name for e in self.engines)))
         self.threads = threads
         self.games = games
+        self.stored_games = {e.name: [] for e in engines} # Stores the games of each engine
     
     def play_game(self):
         """Play a single game"""
@@ -29,7 +32,6 @@ class Tournament(object):
         Tournament.play_tournament()
     
     def play_tournament(self):
-        self.stored_games = []
         # Deze lijst wordt nogal groot na verloop van tijd, omdat er volledige
         # grids in worden opgeslagen. Met 10000 runs was dat 50MB, dus met
         # 1 miljoen runs (voor 1 engine) is dat al 5GB.
@@ -40,37 +42,55 @@ class Tournament(object):
         if self.threads == 1: # Running sequentially
             self.gamecounter = 0
             for game in range(self.games):
-                self.gamecounter += 1
-                if self.gamecounter % 1000 == 0:
-                    print self.gamecounter, "of", self.games, "games played"
-                self.stored_games.append(self.play_game())
+                for engine in self.engines:
+                    self.gamecounter += 1
+                    if self.gamecounter % 1000 == 0:
+                        print self.gamecounter, "of", self.games, "games played"
+                    self.stored_games[engine.name].append(self.play_game())
         elif 1 < self.threads < 33: # Multiprocessing pwnz0r!!
-            pool = Pool(self.threads)
-            self.stored_games = pool.map(self.play_game, range(self.games))
+            for engine in self.engines:
+                pool = Pool(self.threads)
+                self.stored_games[engine.name] = pool.map(self.play_game, range(self.games))
         else:
             print >>sys.stderr, "Too many processes:", self.threads
             sys.exit(1)
         
-        print "Minimum, average and maximum grand total:", self.get_min("gt"), self.get_avg("gt"), self.get_max("gt")
+        print "Minimum, average and maximum grand total:", self.get_minimum("gt"), self.get_average("gt"), self.get_maximum("gt")
         print "Yahtzee hit percentage:", self.get_hit_ratio("yz")
         print "Yahtzee bonus hit percentage:", self.get_hit_ratio("yb")
     
-    def get_avg(self, position):
-        """Returns the average score for a position, over all grids"""
-        return sum(g.return_score_or_zero(position) for g in self.stored_games)/float(len(self.stored_games))
-
-    def get_min(self, position):
-        """Returns the minimum score for a position, over all grids"""
-        return min(g.return_score_or_zero(position) for g in self.stored_games)
-
-    def get_max(self, position):
-        """Returns the maximum score for a position, over all grids"""
-        return max(g.return_score_or_zero(position) for g in self.stored_games)
-
+    def get_average(self, position):
+        """Returns the average score for a position, over all grids,
+        for each engine"""
+        def average(pos, name):
+            return sum(g.return_score_or_zero(pos) for g in self.stored_games[name])/float(len(self.stored_games[name]))
+        return {e.name: average(position, e.name) for e in self.engines}
+    
+    def get_minimum(self, position):
+        """Returns the minimum score for a position, over all grids,
+        for each engine"""
+        def minimum(pos, name):
+            return min(g.return_score_or_zero(pos) for g in self.stored_games[name])
+        return {e.name: minimum(position, e.name) for e in self.engines}
+    
+    def get_maximum(self, position):
+        """Returns the maximum score for a position, over all grids,
+        for each engine"""
+        def maximum(pos, name):
+            return max(g.return_score_or_zero(pos) for g in self.stored_games[name])
+        return {e.name: maximum(position, e.name) for e in self.engines}
+    
     def get_hit_ratio(self, position):
-        """Returns the average number of non-zero scores for a position, over all grids"""
-        return sum(1 for g in self.stored_games if g.return_score_or_zero(position))/float(len(self.stored_games))
-
+        """Returns the average number of non-zero scores for a position,
+        over all grids, for each engine"""
+        def hit_ratio(pos, name):
+            for g in self.stored_games[name]: print g
+            print "\nhits:", [g.return_score_or_zero(pos) for g in self.stored_games[name]]
+            print "hit count:", sum(1 for g in self.stored_games[name] if g.return_score_or_zero(pos))
+            print "games:", float(len(self.stored_games[name]))
+            return sum(1 for g in self.stored_games[name] if g.return_score_or_zero(pos))/float(len(self.stored_games[name]))
+        return {e.name: hit_ratio(position, e.name) for e in self.engines}
+    
 
 def import_engine(arg):
     """Translate a command line engine argument of the form
@@ -79,7 +99,7 @@ def import_engine(arg):
     engine_args = arg.split(".")[1:] # Options are added with dot notation
     try:
         engine_module = __import__("engines.%s" % engine_name, fromlist=["engines"]) # fromlist defines the package from which to import
-        e = engine_module.Engine(*engine_args) # Instantiate an Engine from the desired module, with the desired arguments. The length of engine_args should match the number of positional arguments in the engine constructor.
+        e = engine_module.Engine(engine_name, *engine_args) # Instantiate an Engine from the desired module, with the desired arguments. The length of engine_args should match the number of positional arguments in the engine constructor.
     except ImportError:
         print >>sys.stderr, "Could not find engine module '%s'" % engine_name
         raise
