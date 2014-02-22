@@ -26,11 +26,11 @@ class Engine(engine.Engine):
 		current_scores_for_positions = [self.grid.score(h, pos) for pos in self.grid.available_positions()]
 		
 		#reroll 1
-  		h.reroll([1,2,3,4,5]);
-		print "First roll:\t", h
+  		h.reroll([1,2,3,4,5]); # Ter info: de waarden in je lijst mogen ook [1,1,1,1,1] zijn bijvoorbeeld. Elke waarde die naar True evalueert, wordt herrold. Niet de waarde, maar de positie in de lijst bepaalt welke dobbelstenen opnieuw rollen.
+		print "First roll:\t", h # Dit is al de tweede rol (eerste reroll). Eerste rol was er al na hand.Hand()
 
 		#reroll 2
-		h.reroll([1,2,3,4,5]);
+		h.reroll([1,2,3,4,5]); # Puntkomma's enkel nodig om 2 statements op 1 lijn te schrijven, wordt afgeraden
 		print "<Second></Second> roll:\t", h
 
 		min_score = min(current_scores_for_positions)
