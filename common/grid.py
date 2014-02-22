@@ -145,10 +145,6 @@ class Grid(object):
         return sum(self.grid[pos][1] for pos in assignable_positions if self.grid[pos] != "---") + self.grid["nb"][1]
     
     
-    def __repr__(self):
-        return "Grid()"
-    
-    
     def __str__(self):
         return "YEAHTZEE SCORE GRID\n" + "\n".join("%-15s: %3d" % (positions[pos][0], self.grid[pos][1]) for pos in positions_in_order) + "\n"
     
