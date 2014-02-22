@@ -76,8 +76,13 @@ class Grid(object):
         """Returns all the grid positions that are currently available
         for scoring.
         - YB is only available after YZ has been scored other than 0 or ---
-        - NB, NT and GT are never available for scoring"""
-        return [x for x in assignable_positions if self.grid[x][1] == "---"]
+        - NB, NT and GT are never available for scoring
+        
+        If 13 positions have been scored in the grid,
+        no further positions can be filled"""
+        if len([x for x in self.grid.values() if x[0] != None]) < 13:
+            return [x for x in assignable_positions if self.grid[x][1] == "---"]
+        else: return []
     
     
     def assign(self, hand, position):
