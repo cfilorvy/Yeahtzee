@@ -63,6 +63,14 @@ class Grid(object):
         self.grid["nt"] = (None, self.number_total()) # No hand for this position
         self.grid["nb"] = (None, {True: 30, False: 0}[self.grid["nt"] >= 63])
         self.grid["gt"] = (None, self.grand_total())
+        
+        # Check if YB position should become available
+        if self.grid["yb"][0] is None:              # YB has not been attained
+            # (Grid for YB should not be reset if it has already been attained)
+            if self.grid["yz"][1] not in ("---", 0):# YZ has been attained
+                self.grid["yb"] = (None, "---")     # YB available for scoring
+            else:                                   # No YZ attained yet
+                self.grid["yb"] = (None, 0)         # YB unavailable
     
     def available_positions(self):
         """Returns all the grid positions that are currently available
