@@ -11,6 +11,8 @@ Created by Bart Desmet on 2012-09-26.
 import sys
 import os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/../")
+
+
 from multiprocessing import Pool # Dit kunnen we hiervoor maar beter gebruiken :)
 from engines import automahtzee
 # import game as g

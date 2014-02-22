@@ -13,9 +13,8 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/../")
 chances_in_order = ["n1", "n2", "n3", "n4", "n5", "n6", "nt", "nb", "k3", "k4", "ch", "fh", "ss", "ls", "yz", "yb", "gt"]
 
 from common import hand
-from common import engine
 from common import grid
-
+from engines import engine
 
 class Engine(engine.Engine):
 

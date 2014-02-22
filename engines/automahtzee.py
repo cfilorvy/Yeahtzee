@@ -14,7 +14,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/../")
 
 from common import grid
 from common import hand
-from common import engine
+from engines import engine
 
 
 class Engine(engine.Engine):

@@ -16,7 +16,7 @@ class Engine(object):
 
 	def start_to_run_complete(self):
 		while self.grid.available_positions():
-			self.turn(verbose);
+			self.turn();
 
 		return self.grid
 
