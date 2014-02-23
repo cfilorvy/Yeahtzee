@@ -14,7 +14,7 @@ random.seed()
 class Hand(object):
     """A hand of 5 dice"""
     def __init__(self):
-        self.throws = 1
+        self.rolls = 1
         self.dice = [random.choice([1, 2, 3, 4, 5, 6]) for d in range(5)]
     
     
@@ -55,11 +55,11 @@ class Hand(object):
     
     
     def reroll(self, which):
-        assert self.throws < 3
+        assert self.rolls < 3
         for index in range(5):
             if which[index]:
                 self.dice[index] = random.choice([1, 2, 3, 4, 5, 6])
-        self.throws += 1
+        self.rolls += 1
     
     
     def __str__(self):
