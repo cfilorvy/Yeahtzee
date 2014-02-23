@@ -84,6 +84,9 @@ class Grid(object):
             return [x for x in assignable_positions if self.grid[x][1] == "---"]
         else: return []
     
+    def filled_positions(self):
+        """Returns all the grid positions that have been filled in."""
+        return [x for x in assignable_positions if self.grid[x][0]]
     
     def assign(self, hand, position):
         """Assigns a tuple to a position in the grid, of the form
