@@ -7,15 +7,13 @@ Created by Stef Bastiaansen on 2012-10-12.
 """
 
 import sys
-import os
 import sqlite3
-import logging
-
-importance_in_order = ["n1", "n2", "n3", "n4", "n5", "n6", "nt", "nb", "k3", "k4", "ch", "fh", "ss", "ls", "yz", "yb",
-                       "gt"]
 
 from common import hand, grid
 from engines import engine
+
+importance_in_order = ["n1", "n2", "n3", "n4", "n5", "n6", "nt", "nb", "k3", "k4", "ch", "fh", "ss", "ls", "yz", "yb",
+                       "gt"]
 
 
 class Engine(engine.Engine):
@@ -42,7 +40,6 @@ class Engine(engine.Engine):
             print "Hoogste gemiddelde %d" % (importance["average_score"])
 
         except sqlite3.Error, e:
-
             print "Error %s:" % e.args[0]
             sys.exit(1)
 
@@ -75,12 +72,12 @@ class Engine(engine.Engine):
 
         return self.grid
 
-    # if max(mogelijke_scores) < 20:
-    #	h.reroll([0,1,2,3,4,5])
-    # if max(mogelijke_scores) < 20:
-    #	h.reroll([0,1,2,3,4,5])
-    # mogelijke_scores = [self.grid.score(h, pos) for pos in self.grid.available_positions()]
-    # print mogelijke_scores
+        # if max(mogelijke_scores) < 20:
+        #	h.reroll([0,1,2,3,4,5])
+        # if max(mogelijke_scores) < 20:
+        #	h.reroll([0,1,2,3,4,5])
+        # mogelijke_scores = [self.grid.score(h, pos) for pos in self.grid.available_positions()]
+        # print mogelijke_scores
 
 
 '''
